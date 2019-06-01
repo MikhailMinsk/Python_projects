@@ -37,8 +37,7 @@ def uppath(path):
     for _ in path[::-1]:
         cur += 1
         if _ == '/':
-            path = path[0:len(path) - cur]
-            return path
+            return path[0:len(path) - cur]
 
 
 while True:
