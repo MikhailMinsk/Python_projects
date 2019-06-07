@@ -1,0 +1,1 @@
+Simple console jabber client. port 5222
