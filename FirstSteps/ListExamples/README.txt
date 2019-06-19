@@ -1,0 +1,1 @@
+This is some examples of solutions to tasks on working with list
