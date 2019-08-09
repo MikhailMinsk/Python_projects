@@ -1,3 +1,5 @@
-.idea/**
-__pycache__/**
-out
+.idea/
+
+
+
+__pycache__/

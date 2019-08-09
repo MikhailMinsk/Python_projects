@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container theme-showcase" role="main">
+        <div class="jumbotron">
+            <h1 class="display-4">Hello, all!</h1>
+            <p class="lead">It's a simple site with anonymous messages</p>
+        </div>
+
+        <div class="container">
+            <form action="{{ url_for('add_page') }}" method="POST">
+
+                <fieldset>
+                    <div class="panel panel-primary panel-heading">
+                        <div class="panel-title">Name:</div>
+                        <input type="text" class="panel-body" name="name" value="">
+                        <br>
+                        <div class="panel-title">Text:</div>
+                        <textarea class="panel-body" name="text" cols="70" rows="3"></textarea>
+                        <br>
+                        <input type="submit" class="btn btn-lg btn-primary" value="Send">
+                    </div>
+
+                    {% with flash_messages = get_flashed_messages(with_categories=true) %}
+                        {% if flash_messages %}
+                            <div id="flashModal" class="modal fade">
+                                <div class="modal-dialog">
+
+                                    <div class="modal-content">
+
+                                        <div class="modal-body">Message added success!</div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok
+                                            </button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <script>
+                                $(document).ready(function () {
+                                    $("#flashModal").modal('show');
+                                });
+                            </script>
+
+                        {% endif %}
+                    {% endwith %}
+                </fieldset>
+
+            </form>
+            <br>
+            <fieldset>
+                <div class="panel panel-primary panel-heading">
+                    <legend><h2>Messages</h2></legend>
+                    {% for message in messages %}<br>
+                        <b>Name:</b> {{ message.name }}<br>
+                        <b>Text:</b> {{ message.text }}<br>
+                    {% endfor %}<br>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+{% endblock %}
