@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {% block title %}
+            Weather
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-secondary border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal text-white">Find weather in your city !</h5>
+    {#    <nav class="my-2 my-md-0 mr-md-3">#}
+    {#        <a class="p-2 text-white" href="#">Main</a>#}
+    <a class="btn  btn-outline-light " href="{% url 'about' %}">Information</a>
+</div>
+
+{% block content %}
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-5 offset-1">
+                <h1>Weather in your city</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <label for="city">City</label>
+                    {{ form.name }}
+                    <input type="submit" name="send" value="Find" class="mt-2 btn btn-secondary">
+
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+
+            <div class="col-5 offset-1">
+                <h1>Last searches:</h1>
+                {% for info in cities_info %}
+                    <div class="alert alert-secondary">
+                        <div class="row">
+                            <div class="col-9">
+                                <b>City: </b> {{ info.city }} <br>
+                                <b>Temperature: </b> {{ info.temp }}<sup>o</sup> <br>
+                            </div>
+                            <div class="col-2 offset-1">
+                                <img src="http://openweathermap.org/img/w/{{ info.icon }}.png" alt="Photo">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <footer class="py-1 bg-secondary">
+        <div class="container">
+            <p class="m-0 text-center text-white"> &copy; HMV</p>
+        </div>
+    </footer>
+{% endblock %}
+
+</body>
+</html>

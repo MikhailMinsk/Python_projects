@@ -1,0 +1,21 @@
+{% extends 'weather/index.html' %}
+
+{% block title %}
+    Information
+{% endblock %}
+
+
+{% block content %}
+    <style>.center {
+        text-align: center;
+        margin-top: 150px;
+    }</style>
+    <div class="center">
+        <p>This application sends a request to the <a href="https://openweathermap.org">openweathermap.org</a>,
+            processes the response and displays on the main page.</p>
+        <p>___</p>
+        <p>&copy; HMV</p>
+        <a class="btn btn-secondary" href="{% url 'home' %}">Return</a>
+    </div>
+{% endblock %}
+
