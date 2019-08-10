@@ -41,7 +41,7 @@ class RegisterUserForm(forms.ModelForm):
         user.is_activated = False
         if commit:
             user.save()
-        user_registrated.send(RegisterUserForm, instance = user)
+        user_registrated.send(RegisterUserForm, instance=user)
         return user
 
     class Meta:

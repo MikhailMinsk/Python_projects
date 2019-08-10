@@ -78,7 +78,7 @@ class RegisterDoneView(TemplateView):
     template_name = 'main/register_done.html'
 
 
-# TODO: setting config SMTP-servera for message
+# TODO: setting config SMTP-server for message
 # TODO: активация через вк
 # TODO: сброс пароля
 
