@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+
+
+{% load bootstrap4 %}
+
+{% block title %}
+    Sing in
+{% endblock %}
+
+{% block content %}
+    <h2>Sing in</h2>
+    {% if user.is_authenticated %}
+        <p>you are already authenticate</p>
+    {% else %}
+        <form method="POST">
+            {% csrf_token %}
+            {% bootstrap_form form layout='horizontal' %}
+            <input type="hidden" name="next" value="{{ next }}">
+            {% buttons submit='Enter' %}{% endbuttons %}
+        </form>
+    {% endif %}
+{% endblock %}

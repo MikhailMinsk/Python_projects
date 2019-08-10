@@ -1,0 +1,8 @@
+Activation user {{ user.username }}
+
+You are registered on "Cosmic Shop".
+To activate, please follow the link {{ host }}{% url 'main:register_activate' %}.
+
+Thank you for registration.
+With respect, administration "Cosmic Shop"
+Have a nice day!
