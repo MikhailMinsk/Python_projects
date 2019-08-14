@@ -4,6 +4,9 @@ from . import views
 
 app_name = 'main'
 urlpatterns = [
+    # rubric
+    path('<int:pk>/', views.by_rubric, name='by_rubric'),
+    # main
     path('', views.index, name='index'),
     path('<str:page>/', views.other_page, name='other'),
     # account
@@ -16,4 +19,5 @@ urlpatterns = [
     path('accounts/register/done/', views.RegisterDoneView.as_view(), name='register_done'),
     path('accounts/register/activate/<str:sign>/', views.user_activate, name='register_activate'),
     path('accounts/register/delete/', views.DeleteUserView.as_view(), name='profile_delete'),
+
 ]

@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import AdvUser
 import datetime
 
-from .models import AdvUser
+from .models import AdvUser, SubRubric, SuperRubric
 from .utilities import send_activation_notification
+from .forms import SubRubricForm
 
 
 def send_activation_notifications(modeladmin, request, queryset):
@@ -11,7 +11,9 @@ def send_activation_notifications(modeladmin, request, queryset):
         if not record.is_activated:
             send_activation_notification(record)
     modeladmin.message_user(request, 'An email notification is send')
-    # ?????p580 send_activation_notifications.short_description = 'Send email with notification is send'
+
+
+send_activation_notifications.short_description = 'Send email with notification is send'
 
 
 class Nonactivatedfilter(admin.SimpleListFilter):
@@ -50,4 +52,20 @@ class AdvUserAdmin(admin.ModelAdmin):
     actions = (send_activation_notification,)
 
 
+class SubRubricInLine(admin.TabularInline):
+    model = SubRubric
+
+
+class SuperRubricAdmin(admin.ModelAdmin):
+    exclude = ('super_rubric',)
+    inlines = (SubRubricInLine,)
+
+
+class SubRubricAdmin(admin.ModelAdmin):
+    form = SubRubricForm
+
+
 admin.site.register(AdvUser)
+admin.site.register(SuperRubric, SuperRubricAdmin)
+admin.site.register(SubRubric, SubRubricAdmin)
+

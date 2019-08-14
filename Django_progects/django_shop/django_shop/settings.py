@@ -27,6 +27,8 @@ INSTALLED_APPS = [
     # custom
     'main.apps.MainConfig',
     'bootstrap4',
+    'django_cleanup',
+    'easy_thumbnails'
 ]
 
 MIDDLEWARE = [
@@ -53,6 +55,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # custom
+                'main.middlewares.main_context_processor',
             ],
         },
     },
@@ -107,3 +112,17 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'main/media')
+MEDIA_URL = '/media/'
+
+# create mini_image
+THUMBNAIL_ALIASES = {
+    '': {
+        'default': {
+            'size': {96, 96},
+            'crop': 'scale',
+        },
+    },
+}
+THUMBNAIL_BASEDIR = 'thumbnails'
