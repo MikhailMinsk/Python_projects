@@ -5,6 +5,7 @@
     {{ ad.title }} - {{ ad.rubric.name }}
 {% endblock %}
 
+
 {% block content %}
     <div class="container-fluid mt-3">
         <div class="row">
@@ -42,6 +43,6 @@
         </div>
     {% endif %}
     <p>
-        <a href="{% url 'main:by_rubric' pk=ad.rubric.pk %}{{ all }}">Back</a>
+        <a href="{% url 'main:profile' %}{{ all }}">Back</a>
     </p>
 {% endblock %}

@@ -116,11 +116,11 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'main/media')
 MEDIA_URL = '/media/'
 
-# create mini_image
+# create mini_image on sub dir
 THUMBNAIL_ALIASES = {
     '': {
         'default': {
-            'size': {96, 96},
+            'size': (96, 96),
             'crop': 'scale',
         },
     },

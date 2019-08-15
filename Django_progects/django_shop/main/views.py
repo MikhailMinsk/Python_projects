@@ -8,7 +8,7 @@ from django.core.paginator import Paginator
 from django.core.signing import BadSignature
 from django.db.models import Q
 from django.http import HttpResponse, Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.shortcuts import render
 from django.template import TemplateDoesNotExist
 from django.template.loader import get_template
@@ -16,13 +16,15 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
-from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm
+from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AdsForm, ImagesFormSet
 from .models import AdvUser, SubRubric, Ads
 from .utilities import signer
 
 
 def index(request):
-    return render(request, 'main/index.html')
+    ads = Ads.objects.filter(is_active=True)[:10]
+    context = {'ads': ads}
+    return render(request, 'main/index.html', context)
 
 
 def other_page(request, page):
@@ -35,7 +37,9 @@ def other_page(request, page):
 
 @login_required
 def profile(request):
-    return render(request, 'main/profile.html')
+    ads = Ads.objects.filter(author=request.user.pk, is_active=True)
+    context = {'ads': ads}
+    return render(request, 'main/profile.html', context)
 
 
 class ShopLoginView(LoginView):
@@ -137,7 +141,7 @@ def by_rubric(request, pk):
     else:
         page_num = 1
     page = paginator.get_page(page_num)
-    context = {'rubric': rubric, 'page': page, 'bbs': page.object_list, 'form': form}
+    context = {'rubric': rubric, 'page': page, 'ads': page.object_list, 'form': form}
     return render(request, 'main/by_rubric.html', context)
 
 
@@ -146,3 +150,61 @@ def detail(request, rubric_pk, pk):
     images = ad.additionalimage_set.all()
     context = {'ad': ad, 'images': images}
     return render(request, 'main/detail.html', context)
+
+
+@login_required
+def profile_ad_detail(request, pk):
+    ad = get_object_or_404(Ads, pk=pk)
+    images = ad.additionalimage_set.all()
+    context = {'ad': ad, 'images': images}
+    return render(request, 'main/detail_user_ad.html', context)
+
+
+@login_required
+def profile_ad_add(request):
+    if request.method == 'POST':
+        form = AdsForm(request.POST, request.FILES)
+        if form.is_valid():
+            ad = form.save()
+            formset = ImagesFormSet(request.POST, request.FILES, instance=ad)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Ad add :)')
+                return redirect('main:profile')
+    else:
+        form = AdsForm(initial={'author': request.user.pk})
+        formset = ImagesFormSet()
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_ad_add.html', context)
+
+
+@login_required
+def profile_ad_change(request, pk):
+    ad = get_object_or_404(Ads, pk=pk)
+    if request.method == 'POST':
+        form = AdsForm(request.POST, request.FILES, instance=ad)
+        if form.is_valid():
+            ad = ad.save()
+            formset = ImagesFormSet(request.POST, request.FILES, instance=ad)
+            if formset.is_valid():
+                formset.save()
+                messages.add_message(request, messages.SUCCESS, 'Ad is changed')
+                return redirect('main:profile')
+    else:
+        form = AdsForm(instance=ad)
+        formset = ImagesFormSet(instance=ad)
+    context = {'form': form, 'formset': formset}
+    return render(request, 'main/profile_ad_change.html', context)
+
+
+@login_required
+def profile_ad_delete(request, pk):
+    ad = get_object_or_404(Ads, pk=pk)
+    if request.method == 'POST':
+        ad.delete()
+        messages.add_message(request, messages.SUCCESS, 'Ad is deleted')
+        return redirect('main:profile')
+    else:
+        context = {'ad': ad}
+        return render(request, 'main/profile_ad_delete.html')
+

@@ -13,6 +13,10 @@ urlpatterns = [
     # account
     path('accounts/login/', views.ShopLoginView.as_view(), name='login'),
     path('accounts/logout/', views.ShopLogoutView.as_view(), name='logout'),
+    path('accounts/profile/add', views.profile_ad_add, name='profile_ad_add'),
+    path('accounts/profile/ad_change/<int:pk>/', views.profile_ad_change, name='profile_ad_change'),
+    path('accounts/profile/ad_delete/<int:pk>/', views.profile_ad_delete, name='profile_ad_delete'),
+    path('accounts/profile/<int:pk>/', views.profile_ad_detail, name='profile_ad_detail'),
     path('accounts/profile/', views.profile, name='profile'),
     path('accounts/profile/change/', views.ChangeUserInfoView.as_view(), name='profile_change'),
     path('accounts/password/change/', views.ChangeUserPasswordView.as_view(), name='password_change'),
@@ -20,5 +24,4 @@ urlpatterns = [
     path('accounts/register/done/', views.RegisterDoneView.as_view(), name='register_done'),
     path('accounts/register/activate/<str:sign>/', views.user_activate, name='register_activate'),
     path('accounts/register/delete/', views.DeleteUserView.as_view(), name='profile_delete'),
-
 ]

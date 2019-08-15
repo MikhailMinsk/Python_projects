@@ -19,10 +19,11 @@
             <div class="col">&nbsp;</div>
             <form class="col-md-auto form-inline">
                 {% bootstrap_form form show_label=False %}
-                {% bootstrap_button content='Search...' button_type='Submit' %}
+                {% bootstrap_button content='Search...' button_type='submit' %}
             </form>
         </div>
     </div>
+
     {% if ads %}
         <ul class="list-unstyled">
             {% for ad in ads %}
@@ -32,17 +33,19 @@
                         {% if ad.image %}
                             <img class="mr-3" src="{% thumbnail ad.image 'default' %}">
                         {% else %}
-                            <img class="mr-3" src="{% static 'main/empty.jpg' %}">
+                            <img class="mr-3" src="{% static 'main/empty.png' %}">
                         {% endif %}
                     </a>
-                    <div class="media-body"></div>
-                    <h3><a href="{{ url }}{{ all }}">{{ ad.title }}</a></h3>
-                    <div>{{ bb.content }}</div>
-                    <p class="text-right font-weight-bolt">{{ ad.price }} cr.</p>
-                    <p class="text-right font-italic">{{ ad.created }}</p>
+                    <div class="media-body">
+                        <h3><a href="{{ url }}{{ all }}">{{ ad.title }}</a></h3>
+                        <div>{{ ab.content }}</div>
+                        <p class="text-right font-weight-bolt">{{ ad.price }} cr.</p>
+                        <p class="text-right font-italic">{{ ad.created }}</p>
+                    </div>
                 </li>
             {% endfor %}
         </ul>
         {% bootstrap_pagination page url=keyword %}
     {% endif %}
+
 {% endblock %}

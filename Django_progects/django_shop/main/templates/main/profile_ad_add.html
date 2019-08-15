@@ -1,0 +1,15 @@
+{% extends 'main/base.html' %}
+
+{% load bootstrap4 %}
+{% block title %}
+    Add ad - profile
+{% endblock %}
+
+{% block content %}
+    <h2>Add ad</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form layout='horizontal' %}
+        {% buttons submit='Add' %}{% endbuttons %}
+    </form>
+{% endblock %}

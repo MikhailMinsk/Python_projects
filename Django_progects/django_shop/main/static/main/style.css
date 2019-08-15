@@ -6,3 +6,13 @@ header h1{
 .root{
     font-size: larger;
 }
+
+ /* TODO: why do not work styles for images ????*/
+
+/*img.main-image{*/
+    /*width: 600px;*/
+/*}*/
+
+/*img.additional-image{*/
+    /*width: 30px;*/
+/*}*/
