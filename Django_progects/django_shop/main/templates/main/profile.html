@@ -39,8 +39,8 @@
                         <p class="text-right font-weight-bolt">{{ ad.price }} cr.</p>
                         <p class="text-right font-italic">{{ ad.created }}</p>
                         <p class="text-right mt-2">
-                            <a href="{% url 'main:profile_ad_change' pk=ad.pk %}">Исправить</a>
-                            <a href="{% url 'main:profile_ad_delete' pk=ad.pk %}">Удалить</a>
+                            <a href="{% url 'main:profile_ad_change' pk=ad.pk %}">Change</a>
+                            <a href="{% url 'main:profile_ad_delete' pk=ad.pk %}">Delete</a>
                         </p>
                     </div>
                 </li>

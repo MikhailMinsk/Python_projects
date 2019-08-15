@@ -44,5 +44,7 @@
     {% endif %}
     <p>
         <a href="{% url 'main:profile' %}{{ all }}">Back</a>
+        <a href="{% url 'main:profile_ad_change' pk=ad.pk %}">Change</a>
+        <a href="{% url 'main:profile_ad_delete' pk=ad.pk %}">Delete</a>
     </p>
 {% endblock %}

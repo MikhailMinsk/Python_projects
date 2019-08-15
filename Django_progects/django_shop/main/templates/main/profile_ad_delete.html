@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Delete ad - profile
+{% endblock %}
+
+{% block content %}
+    <h1>Are you sure you want to delete?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button class=" btn btn-danger">Yes, delete</button>
+    </form>
+    <p>
+        <a href="{% url 'main:profile_ad_detail' pk=ad.pk %}">Back</a>
+    </p>
+{% endblock %}

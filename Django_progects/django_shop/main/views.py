@@ -193,7 +193,7 @@ def profile_ad_change(request, pk):
     else:
         form = AdsForm(instance=ad)
         formset = ImagesFormSet(instance=ad)
-    context = {'form': form, 'formset': formset}
+    context = {'form': form, 'formset': formset, 'ad': ad}
     return render(request, 'main/profile_ad_change.html', context)
 
 
@@ -206,5 +206,4 @@ def profile_ad_delete(request, pk):
         return redirect('main:profile')
     else:
         context = {'ad': ad}
-        return render(request, 'main/profile_ad_delete.html')
-
+        return render(request, 'main/profile_ad_delete.html', context)
