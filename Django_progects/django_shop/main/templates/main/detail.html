@@ -1,5 +1,7 @@
 {% extends 'main/base.html' %}
 
+{% load bootstrap4 %}
+
 
 {% block title %}
     {{ ad.title }} - {{ ad.rubric.name }}
@@ -44,4 +46,21 @@
     <p>
         <a href="{% url 'main:by_rubric' pk=ad.rubric.pk %}{{ all }}">Back</a>
     </p>
+    <h4 class="mt-5">New comment</h4>
+    <form method="post">
+        {% csrf_token %}
+    {% bootstrap_form form layout='horizontal' %}
+    {% buttons submit='Save' %}{% endbuttons %}
+    </form>
+    {% if comments %}
+        <div class="mt-5">
+            {% for comment in comments %}
+                <div class="my-2 p-2 border">
+                    <h5>{{ comment.author }}</h5>
+                    <p>{{ comment.content }}</p>
+                    <p class="text-right font-italic">{{ comment.created }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}

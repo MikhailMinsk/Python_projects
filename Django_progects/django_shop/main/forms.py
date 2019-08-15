@@ -1,9 +1,10 @@
+from captcha.fields import CaptchaField
 from django import forms
 from django.contrib.auth import password_validation
 from django.core.exceptions import ValidationError
 from django.forms import inlineformset_factory
 
-from .models import AdvUser, user_registrated, SubRubric, SuperRubric, Ads, AdditionalImage
+from .models import AdvUser, user_registrated, SubRubric, SuperRubric, Ads, AdditionalImage, Comment
 
 
 class ChangeUserInfoForm(forms.ModelForm):
@@ -63,6 +64,7 @@ class SearchForm(forms.Form):
     keyword = forms.CharField(required=False, max_length=20, label='')
 
 
+# Ads
 class AdsForm(forms.ModelForm):
     class Meta:
         model = Ads
@@ -71,3 +73,20 @@ class AdsForm(forms.ModelForm):
 
 
 ImagesFormSet = inlineformset_factory(Ads, AdditionalImage, fields='__all__')
+
+
+# comments
+class UserCommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        exclude = ('is_active',)
+        widgets = {'ads': forms.HiddenInput}
+
+
+class GuestCommentForm(forms.ModelForm):
+    captcha = CaptchaField(label='Input text from image', error_messages={'invalid': 'Wrong captcha'})
+
+    class Meta:
+        model = Comment
+        exclude = ('is_active',)
+        widgets = {'ads': forms.HiddenInput}

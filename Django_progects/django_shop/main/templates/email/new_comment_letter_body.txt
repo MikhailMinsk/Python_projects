@@ -1,0 +1,8 @@
+You have new comment from {{ author }} on "Cosmic Shop"
+
+Text comment:
+{{ comment }}
+
+
+With respect, administration "Cosmic Shop"
+Have a nice day!

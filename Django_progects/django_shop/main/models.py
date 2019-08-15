@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.db.models.signals import post_save
 from django.dispatch import Signal
 
-from .utilities import send_activation_notification, get_timestamp_path
+from .utilities import send_activation_notification, get_timestamp_path, send_new_comment_notification
 
 user_registrated = Signal(providing_args=['instance'])
 
@@ -101,3 +102,26 @@ class AdditionalImage(models.Model):
     class Meta:
         verbose_name_plural = 'Additional image'
         verbose_name = 'Additional image'
+
+
+class Comment(models.Model):
+    ads = models.ForeignKey(Ads, on_delete=models.CASCADE, verbose_name='Ad_com')
+    author = models.CharField(max_length=50, verbose_name='Author')
+    content = models.TextField(verbose_name='Content')
+    is_active = models.BooleanField(default=True, db_index=True, verbose_name='Show comment?')
+    created = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Published')
+
+    class Meta:
+        verbose_name = 'Comment'
+        verbose_name_plural = 'Comments'
+        ordering = ['created']
+
+
+# send message about new comments
+def post_save_dispatcher(sender, **kwargs):
+    author = kwargs['instance'].ads.author
+    if kwargs['created'] and author.send_messages:
+        send_new_comment_notification(kwargs['instance'])
+
+
+post_save.connect(post_save_dispatcher, sender=Comment)

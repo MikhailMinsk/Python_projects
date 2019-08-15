@@ -16,8 +16,9 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.edit import UpdateView, CreateView, DeleteView
 
-from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AdsForm, ImagesFormSet
-from .models import AdvUser, SubRubric, Ads
+from .forms import ChangeUserInfoForm, RegisterUserForm, SearchForm, AdsForm, ImagesFormSet, UserCommentForm, \
+    GuestCommentForm
+from .models import AdvUser, SubRubric, Ads, Comment
 from .utilities import signer
 
 
@@ -146,9 +147,25 @@ def by_rubric(request, pk):
 
 
 def detail(request, rubric_pk, pk):
-    ad = get_object_or_404(Ads, pk=pk)
+    ad = Ads.objects.get(pk=pk)
     images = ad.additionalimage_set.all()
-    context = {'ad': ad, 'images': images}
+    comments = Comment.objects.filter(ads=pk, is_active=True)
+    initial = {'ads': ad.pk}
+    if request.user.is_authenticated:
+        initial['author'] = request.user.username
+        form_class = UserCommentForm
+    else:
+        form_class = GuestCommentForm
+    form = form_class(initial=initial)
+    if request.method == 'POST':
+        c_form = form_class(request.POST)
+        if c_form.is_valid():
+            c_form.save()
+            messages.add_message(request, messages.SUCCESS, 'Comment added')
+        else:
+            form = c_form
+            messages.add_message(request, messages.WARNING, "Comment don't added")
+    context = {'ad': ad, 'images': images, 'comments': comments, 'form': form}
     return render(request, 'main/detail.html', context)
 
 
