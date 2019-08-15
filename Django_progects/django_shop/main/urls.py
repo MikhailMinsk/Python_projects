@@ -5,6 +5,7 @@ from . import views
 app_name = 'main'
 urlpatterns = [
     # rubric
+    path('<int:rubric_pk>/<int:pk>', views.detail, name='detail'),
     path('<int:pk>/', views.by_rubric, name='by_rubric'),
     # main
     path('', views.index, name='index'),
