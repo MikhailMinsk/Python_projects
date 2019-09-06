@@ -10,7 +10,6 @@ def func(arr):
     return max(arr)
 
 
-
 if __name__ == '__main__':
     print(func([1, 1, 1, 2, 1, 1]))
     print(func([0, 0, 0.55, 0, 0]))
