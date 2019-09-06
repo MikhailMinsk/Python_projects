@@ -6,10 +6,9 @@ def func(arr):
     """
 
     if arr.count(min(arr)) == 1:
-        n = min(arr)
-        return n
-    n = max(arr)
-    return n
+        return min(arr)
+    return max(arr)
+
 
 
 if __name__ == '__main__':
