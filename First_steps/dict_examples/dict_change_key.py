@@ -38,6 +38,12 @@ def keyToStr(Dict):
 #             New_key = str(key)
 #             Dct[New_key] = Dct.pop(key)
 
+# change keys to values (two versions):
+dict_ = {'a': 1, 'b': 2}
+dict_ = dict((key, value) for value, key in dict_.items())
+dict_ = dict(zip(dict_.values(), dict_.keys()))
+print(dict_)
+
 
 if __name__ == '__main__':
     print(keyToStr(my_dict))
