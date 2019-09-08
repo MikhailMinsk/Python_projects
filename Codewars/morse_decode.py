@@ -1,5 +1,4 @@
 def morse_bits(bits):
-    # if 00000000000000 in string then:
     return bits.replace('00000000000000', '  ') \
         .replace('111111', '-') \
         .replace('11111', '-') \
