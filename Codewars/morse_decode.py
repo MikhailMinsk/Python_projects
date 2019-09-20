@@ -1,3 +1,5 @@
+# !!!!!!! not finished !!!!!!!
+
 def morse_bits(bits):
     return bits.replace('00000000000000', '  ') \
         .replace('111111', '-') \
