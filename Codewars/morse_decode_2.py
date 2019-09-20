@@ -23,6 +23,8 @@ Pause between words – is 7 time units long.
 Пауза между символами внутри слова - это 3 единицы времени.
 Пауза между словами - это 7 единиц времени.
 """
+
+
 def morse_bits(bits):
     bits = bits.lstrip('0').rstrip('0')
     n = min([len(i) for i in bits.split('1') + bits.split('0') if i])
@@ -58,18 +60,18 @@ def morse_decode(morseCode):
 if __name__ == '__main__':
     code = '1100110011001100000011000000111111001100111111001111110000' \
            '000000000011001111110011111100111111000000110011001111110000001111110011001100000011'
-    print(morse_decode(morse_bits(code)))
-    print(morse_decode(morse_bits('111000000000111')))
-    print(morse_decode(morse_bits('111110000011111')))
     code2 = '000111000101010100010000000111011101011100010101110001010001110101110100011101011100' \
             '000001110101010001011101000111011101110001011101110001110100000001010111010001110111' \
             '011100011101010111000000010111011101110001010111000111011100010111011101000101010000' \
             '000111011101110001010101110001000101110100000001110001010101000100000001011101010001' \
             '011100011101110101000111010111011100000001110101000111011101110001110111010001011101' \
             '01110101110'
+    print(morse_decode(morse_bits(code)))
     print(morse_decode(morse_bits(code2)))
     print(morse_decode(morse_bits('1110111')))
     print(morse_decode(morse_bits('11111100111111')))
-    print(morse_decode(morse_bits('111000111000111')))  # S
-    print(morse_decode(morse_bits('000000011100000')))  # e
+    print(morse_decode(morse_bits('111000111000111')))
+    print(morse_decode(morse_bits('000000011100000')))
     print(morse_decode(morse_bits('111')))
+    print(morse_decode(morse_bits('111000000000111')))
+    print(morse_decode(morse_bits('111110000011111')))
