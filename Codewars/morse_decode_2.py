@@ -1,29 +1,31 @@
-# !!! in progress ...
+"""
+In this kata you have to write a Morse code decoder for wired electrical telegraph.
+Electric telegraph is operated on a 2-wire line with a key that, when pressed, connects
+the wires together, which can be detected on a remote station. The Morse code encodes every
+character being transmitted as a sequence of "dots" (short presses on the key) and "dashes"
+(long presses on the key).
+When transmitting the Morse code, the international standard specifies that:
+"Dot" – is 1 time unit long.
+"Dash" – is 3 time units long.
+Pause between dots and dashes in a character – is 1 time unit long.
+Pause between characters inside a word – is 3 time units long.
+Pause between words – is 7 time units long.
+
+В этом ката вы должны написать декодер азбуки Морзе для проводного электрического телеграфа.
+Электрический телеграф работает на 2-х проводной линии с ключом, который при нажатии соединяет
+провода вместе, которые можно обнаружить на удаленной станции. Азбука Морзе кодирует каждый
+символ передается в виде последовательности «точек» (коротких нажатий на клавишу) и «тире»
+(длительное нажатие на клавишу).
+При передаче азбуки Морзе международный стандарт указывает, что:
+«Точка» - это 1 единица времени.
+«Тире» - это 3 единицы времени.
+Пауза между точками и тире в символе - 1 единица времени.
+Пауза между символами внутри слова - это 3 единицы времени.
+Пауза между словами - это 7 единиц времени.
+"""
 def morse_bits(bits):
-    def rang(code):
-        code = code.lstrip('0')
-        k = len(code) - len(code.lstrip('1'))
-        if k == 3 and '000000000' not in code:
-            return 1
-        elif k % 3 == 0 and '000000000' not in code:
-            return int(k / 3)
-        elif k == 3 and '000000000' in code:
-            return 3
-        return k
-
-    def rang_2(code):
-        code = code.lstrip('0')
-        k = len(code) - len(code.lstrip('1'))
-        if k % 3 == 0:
-            r = int(k / 3)
-            if '0' * r or '000' * r in bits:
-                return k
-            else:
-                return int(k / 3)
-        return k
-
-    n = rang(bits)
-    # n = rang_2(bits)
+    bits = bits.lstrip('0').rstrip('0')
+    n = min([len(i) for i in bits.split('1') + bits.split('0') if i])
     return bits.replace('111' * n, '-') \
         .replace('1' * n, '.') \
         .replace('0000000' * n, '  ') \
@@ -69,5 +71,5 @@ if __name__ == '__main__':
     print(morse_decode(morse_bits('1110111')))
     print(morse_decode(morse_bits('11111100111111')))
     print(morse_decode(morse_bits('111000111000111')))  # S
-    print(morse_decode(morse_bits('000000111000')))  # e
+    print(morse_decode(morse_bits('000000011100000')))  # e
     print(morse_decode(morse_bits('111')))
