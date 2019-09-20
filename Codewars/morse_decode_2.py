@@ -1,3 +1,4 @@
+# !!! in progress ...
 def morse_bits(bits):
     def rang(code):
         code = code.lstrip('0')
