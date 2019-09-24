@@ -1,0 +1,16 @@
+{% extends 'new_app/base.html' %}
+
+{% block head_title %}
+    {{ blog.title }}
+{% endblock %}
+
+
+{% block content %}
+    <h1>Are you sure you want to delete?</h1>
+    <form method="POST">
+        {% csrf_token %}
+        <button class=" btn btn-danger">Yes, delete</button>
+    </form>
+    <h4>{{ blog.title }}</h4>
+    <p>{{ blog.content }}</p>
+{% endblock %}

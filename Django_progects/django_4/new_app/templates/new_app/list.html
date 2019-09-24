@@ -1,0 +1,14 @@
+{% extends 'new_app/base.html' %}
+
+
+
+{% block content %}
+    <div class="row">
+        {% for blog in blogs %}
+            {#        transfer to list_inline  - with <name> = blog #}
+            {% include 'new_app/list_inline.html' with blog_post=blog truncate=True detail=False %}
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

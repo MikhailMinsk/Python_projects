@@ -1,0 +1,11 @@
+{% extends 'new_app/base.html' %}
+
+{% block head_title %}
+    {{ blog.title }}
+{% endblock %}
+
+
+{% block content %}
+    <h1>{{ blog.title }} - Update</h1>
+    <p>{{ blog.content }}</p>
+{% endblock %}

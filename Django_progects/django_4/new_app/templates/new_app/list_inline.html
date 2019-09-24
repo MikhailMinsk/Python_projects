@@ -1,0 +1,30 @@
+<div class="col-12 col-md-10 mb-4 mx-auto">
+    <div class="card {% if not blog_post.publish_date %} border border-info text-dark {% endif %}">
+        <div class="card-body">
+
+            {% if blog_post.image %}
+                <a href="{{ blog_post.slug }}"><img width="100%" src="{{ blog_post.image.url }}" class="card-img-top" alt=""></a>
+            {% endif %}
+            <h5 class="card-title">{{ blog_post.title }}</h5>
+            <small class="text-muted">{{ blog_post.publish_date }}</small>
+
+            {% if truncate %}
+                {#        linebreaks|  - make paragraph#}
+                {#        truncatewords:20 - make limit words in blog.content #}
+
+                <p class="card-text">{{ blog_post.content| linebreaks |truncatewords:15 }}</p>
+            {% else %}
+                <p class="card-text">{{ blog_post.content| linebreaks }}</p>
+
+            {% endif %}
+
+            {% if not detail %}
+                {% if not blog_post.publish_date %}
+                    <strong>in process... </strong>
+                {% endif %}
+                <a href="{{ blog_post.slug }}">View</a>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
